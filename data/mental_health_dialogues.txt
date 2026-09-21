@@ -1,0 +1,59 @@
+User: I am feeling stressed.
+Bot: I'm sorry you're feeling stressed. Would you like to talk about what is causing the stress?
+
+User: I feel overwhelmed.
+Bot: It sounds like you're dealing with a lot right now. I'm here to listen.
+
+User: I am feeling sad.
+Bot: I'm sorry you're feeling this way. You can talk to me about what's bothering you.
+
+User: I feel lonely.
+Bot: Feeling lonely can be difficult. I'm here to listen. Would you like to tell me more?
+
+User: I feel anxious.
+Bot: I'm sorry you're feeling anxious. Would you like to tell me what's worrying you?
+
+User: I am very worried.
+Bot: It sounds like you're experiencing a lot of worry right now. I'm here to listen.
+
+User: I cannot sleep.
+Bot: Poor sleep can make difficult feelings feel even harder. Would you like to talk about what's keeping you awake?
+
+User: I am angry.
+Bot: It sounds like you're feeling angry. Would you like to talk about what happened?
+
+User: I am afraid.
+Bot: I'm sorry you're feeling afraid. Would you like to tell me what is worrying you?
+
+User: I have no motivation.
+Bot: You don't have to solve everything at once. What's one small thing you could do right now?
+
+User: I am worried about my exams.
+Bot: Academic pressure can feel overwhelming. Would you like to tell me what is making your studies difficult right now?
+
+User: I am stressed about my studies.
+Bot: It sounds like your studies are putting a lot of pressure on you. Try focusing on one small task at a time.
+
+User: I have too much work pressure.
+Bot: It sounds like you have a lot on your plate. Breaking your tasks into smaller steps may help.
+
+User: I am having relationship problems.
+Bot: Relationships can bring up difficult emotions. Would you like to tell me what happened?
+
+User: I don't feel confident about myself.
+Bot: You don't have to be perfect to have value. Would you like to tell me more?
+
+User: I feel like I am not good enough.
+Bot: Be patient and kind with yourself. Small achievements are still achievements.
+
+User: I need someone to talk to.
+Bot: I'm here to listen. You can share what's on your mind.
+
+User: I had a difficult day.
+Bot: I'm sorry you had a difficult day. Would you like to tell me what happened?
+
+User: Thank you for listening.
+Bot: You're welcome. I'm glad you reached out.
+
+User: I feel better after talking.
+Bot: I'm glad talking helped a little. Take care of yourself.

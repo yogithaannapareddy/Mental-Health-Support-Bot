@@ -1,0 +1,73 @@
+{
+    "stress": [
+        "I'm sorry you're feeling stressed. Would you like to talk about what is causing the stress?",
+        "It sounds like you're dealing with a lot right now. I'm here to listen.",
+        "Thank you for sharing that. Would you like to tell me more about what's making you feel stressed?"
+    ],
+
+    "sadness": [
+        "I'm sorry you're feeling this way. You can talk to me about what's bothering you.",
+        "Thank you for sharing how you feel. Would you like to tell me more about what's happening?",
+        "I'm here to listen. What has been making you feel this way?"
+    ],
+
+    "loneliness": [
+        "Feeling lonely can be difficult. I'm here to listen.",
+        "Thank you for reaching out. Would you like to tell me more about what you're experiencing?",
+        "You deserve support and connection. Consider reaching out to someone you trust as well."
+    ],
+
+    "anxiety": [
+        "I'm sorry you're feeling anxious. Would you like to tell me what's worrying you?",
+        "It sounds like you're experiencing a lot of worry right now. Taking a few slow breaths may help you pause.",
+        "Thank you for telling me. I'm here to listen."
+    ],
+
+    "sleep": [
+        "Poor sleep can make difficult feelings feel even harder. Would you like to talk about what's keeping you awake?",
+        "Would you like to tell me what's making it difficult to sleep?",
+        "If sleep problems continue, consider discussing them with a healthcare professional."
+    ],
+
+    "anger": [
+        "It sounds like you're feeling angry. Would you like to talk about what happened?",
+        "It's okay to talk about difficult emotions. What made you feel this way?",
+        "Taking a short pause before reacting can sometimes help. I'm here to listen."
+    ],
+
+    "fear": [
+        "I'm sorry you're feeling afraid. Would you like to tell me what is worrying you?",
+        "That sounds difficult. I'm here to listen.",
+        "You can take things one step at a time. Tell me more about what you're experiencing."
+    ],
+
+    "motivation": [
+        "It's normal to have days when motivation feels low. Try focusing on one small task at a time.",
+        "You don't have to solve everything at once. What's one small thing you could do right now?",
+        "Be kind to yourself. Small steps can still be meaningful progress."
+    ],
+
+    "study_pressure": [
+        "Academic pressure can feel overwhelming. Would you like to tell me what is making your studies difficult right now?",
+        "It sounds like your studies are putting a lot of pressure on you. Try focusing on one small task at a time.",
+        "You don't have to solve everything at once. What part of your studies is worrying you the most?"
+    ],
+
+    "work_pressure": [
+        "Work pressure can be difficult to manage. Would you like to tell me what's causing the pressure?",
+        "It sounds like you have a lot on your plate. Breaking your tasks into smaller steps may help.",
+        "I'm here to listen. What has been making work difficult for you?"
+    ],
+
+    "relationship": [
+        "Relationships can bring up difficult emotions. Would you like to tell me what happened?",
+        "It sounds like this relationship is affecting you. I'm here to listen.",
+        "Talking through what happened can sometimes help you understand what you're feeling."
+    ],
+
+    "self_confidence": [
+        "It's understandable to have moments when your confidence feels low. What is making you feel this way?",
+        "You don't have to be perfect to have value. Would you like to tell me more?",
+        "Be patient and kind with yourself. Small achievements are still achievements."
+    ]
+}

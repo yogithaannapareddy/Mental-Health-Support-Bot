@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>MindCare - Mental Health Support</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="app-container">
+
+        <!-- Header -->
+        <header class="chat-header">
+
+            <div class="bot-icon">
+                🧠
+            </div>
+
+            <div>
+                <h1>MindCare</h1>
+
+                <p>
+                    Mental Health Support Assistant
+                </p>
+            </div>
+
+            <div class="status">
+                <span class="status-dot"></span>
+                Online
+            </div>
+
+        </header>
+
+
+        <!-- Chat Area -->
+        <main id="chat-box" class="chat-box">
+
+            <div class="message bot-message">
+
+                <div class="avatar">
+                    🧠
+                </div>
+
+                <div class="message-content">
+
+                    <div class="sender">
+                        MindCare
+                    </div>
+
+                    <div class="bubble">
+                        Hello! I'm here to listen and support you.
+                        How are you feeling today?
+                    </div>
+
+                </div>
+
+            </div>
+
+        </main>
+
+
+        <!-- Input Area -->
+        <div class="input-area">
+
+            <input
+                type="text"
+                id="message-input"
+                placeholder="Type how you're feeling..."
+                autocomplete="off"
+            >
+
+            <button
+                id="send-button"
+                onclick="sendMessage()"
+            >
+                Send
+            </button>
+
+        </div>
+
+
+        <!-- Disclaimer -->
+        <div class="disclaimer">
+
+            This chatbot provides general emotional support and
+            is not a replacement for a qualified mental-health professional.
+
+        </div>
+
+    </div>
+
+
+    <script>
+
+        const messageInput =
+            document.getElementById("message-input");
+
+        const chatBox =
+            document.getElementById("chat-box");
+
+
+        // Allow Enter key to send message
+        messageInput.addEventListener(
+            "keydown",
+            function(event) {
+
+                if (event.key === "Enter") {
+
+                    sendMessage();
+
+                }
+
+            }
+        );
+
+
+        async function sendMessage() {
+
+            const message =
+                messageInput.value.trim();
+
+
+            // Don't send empty messages
+            if (message === "") {
+
+                return;
+
+            }
+
+
+            // Display user message
+            addMessage(
+                message,
+                "user"
+            );
+
+
+            // Clear input
+            messageInput.value = "";
+
+
+            // Show typing indicator
+            const typingMessage =
+                addTypingIndicator();
+
+
+            try {
+
+                const response =
+                    await fetch(
+                        "http://127.0.0.1:5000/chat",
+                        {
+                            method: "POST",
+
+                            headers: {
+                                "Content-Type":
+                                    "application/json"
+                            },
+
+                            body: JSON.stringify({
+                                message: message
+                            })
+                        }
+                    );
+
+
+                const data =
+                    await response.json();
+
+
+                // Remove typing indicator
+                typingMessage.remove();
+
+
+                if (data.response) {
+
+                    addMessage(
+                        data.response,
+                        "bot"
+                    );
+
+                }
+                else if (data.error) {
+
+                    addMessage(
+                        data.error,
+                        "bot"
+                    );
+
+                }
+
+
+            }
+            catch (error) {
+
+                typingMessage.remove();
+
+                addMessage(
+                    "Sorry, I could not connect to the server. Please make sure the Flask API is running.",
+                    "bot"
+                );
+
+                console.error(error);
+
+            }
+
+        }
+
+
+        function addMessage(
+            message,
+            sender
+        ) {
+
+            const messageDiv =
+                document.createElement("div");
+
+
+            messageDiv.className =
+                "message " +
+                sender +
+                "-message";
+
+
+            if (sender === "bot") {
+
+                messageDiv.innerHTML = `
+                    <div class="avatar">
+                        🧠
+                    </div>
+
+                    <div class="message-content">
+
+                        <div class="sender">
+                            MindCare
+                        </div>
+
+                        <div class="bubble">
+                            ${escapeHtml(message)}
+                        </div>
+
+                    </div>
+                `;
+
+            }
+            else {
+
+                messageDiv.innerHTML = `
+                    <div class="message-content">
+
+                        <div class="sender">
+                            You
+                        </div>
+
+                        <div class="bubble">
+                            ${escapeHtml(message)}
+                        </div>
+
+                    </div>
+                `;
+
+            }
+
+
+            chatBox.appendChild(messageDiv);
+
+
+            // Scroll to bottom
+            chatBox.scrollTop =
+                chatBox.scrollHeight;
+
+        }
+
+
+        function addTypingIndicator() {
+
+            const typingDiv =
+                document.createElement("div");
+
+
+            typingDiv.className =
+                "message bot-message";
+
+
+            typingDiv.innerHTML = `
+                <div class="avatar">
+                    🧠
+                </div>
+
+                <div class="message-content">
+
+                    <div class="sender">
+                        MindCare
+                    </div>
+
+                    <div class="bubble typing">
+                        Thinking...
+                    </div>
+
+                </div>
+            `;
+
+
+            chatBox.appendChild(typingDiv);
+
+
+            chatBox.scrollTop =
+                chatBox.scrollHeight;
+
+
+            return typingDiv;
+
+        }
+
+
+        function escapeHtml(text) {
+
+            const div =
+                document.createElement("div");
+
+            div.textContent = text;
+
+            return div.innerHTML;
+
+        }
+
+    </script>
+
+</body>
+
+</html>

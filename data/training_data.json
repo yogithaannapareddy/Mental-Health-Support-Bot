@@ -1,0 +1,82 @@
+[
+    {
+        "user": "I am feeling stressed.",
+        "bot": "I'm sorry you're feeling stressed. Would you like to talk about what is causing the stress?"
+    },
+    {
+        "user": "I feel overwhelmed.",
+        "bot": "It sounds like you're dealing with a lot right now. I'm here to listen."
+    },
+    {
+        "user": "I am feeling sad.",
+        "bot": "I'm sorry you're feeling this way. You can talk to me about what's bothering you."
+    },
+    {
+        "user": "I feel lonely.",
+        "bot": "Feeling lonely can be difficult. I'm here to listen. Would you like to tell me more?"
+    },
+    {
+        "user": "I feel anxious.",
+        "bot": "I'm sorry you're feeling anxious. Would you like to tell me what's worrying you?"
+    },
+    {
+        "user": "I am very worried.",
+        "bot": "It sounds like you're experiencing a lot of worry right now. I'm here to listen."
+    },
+    {
+        "user": "I cannot sleep.",
+        "bot": "Poor sleep can make difficult feelings feel even harder. Would you like to talk about what's keeping you awake?"
+    },
+    {
+        "user": "I am angry.",
+        "bot": "It sounds like you're feeling angry. Would you like to talk about what happened?"
+    },
+    {
+        "user": "I am afraid.",
+        "bot": "I'm sorry you're feeling afraid. Would you like to tell me what is worrying you?"
+    },
+    {
+        "user": "I have no motivation.",
+        "bot": "You don't have to solve everything at once. What's one small thing you could do right now?"
+    },
+    {
+        "user": "I am worried about my exams.",
+        "bot": "Academic pressure can feel overwhelming. Would you like to tell me what is making your studies difficult right now?"
+    },
+    {
+        "user": "I am stressed about my studies.",
+        "bot": "It sounds like your studies are putting a lot of pressure on you. Try focusing on one small task at a time."
+    },
+    {
+        "user": "I have too much work pressure.",
+        "bot": "It sounds like you have a lot on your plate. Breaking your tasks into smaller steps may help."
+    },
+    {
+        "user": "I am having relationship problems.",
+        "bot": "Relationships can bring up difficult emotions. Would you like to tell me what happened?"
+    },
+    {
+        "user": "I don't feel confident about myself.",
+        "bot": "You don't have to be perfect to have value. Would you like to tell me more?"
+    },
+    {
+        "user": "I feel like I am not good enough.",
+        "bot": "Be patient and kind with yourself. Small achievements are still achievements."
+    },
+    {
+        "user": "I need someone to talk to.",
+        "bot": "I'm here to listen. You can share what's on your mind."
+    },
+    {
+        "user": "I had a difficult day.",
+        "bot": "I'm sorry you had a difficult day. Would you like to tell me what happened?"
+    },
+    {
+        "user": "Thank you for listening.",
+        "bot": "You're welcome. I'm glad you reached out."
+    },
+    {
+        "user": "I feel better after talking.",
+        "bot": "I'm glad talking helped a little. Take care of yourself."
+    }
+]

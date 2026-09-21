@@ -1,0 +1,289 @@
+{
+  "intents": [
+    {
+      "tag": "greeting",
+      "patterns": [
+        "hello",
+        "hi",
+        "hey",
+        "good morning",
+        "good evening",
+        "hello there",
+        "hey there"
+      ],
+      "responses": [
+        "Hello! I'm here to listen. How are you feeling today?",
+        "Hi! You can share what's on your mind.",
+        "Hello! I'm glad you reached out."
+      ]
+    },
+
+    {
+      "tag": "stress",
+      "patterns": [
+        "I am stressed",
+        "I feel stressed",
+        "I have a lot of stress",
+        "I am under a lot of pressure",
+        "Everything feels stressful",
+        "I feel overwhelmed",
+        "I am feeling tense",
+        "There is too much pressure on me"
+      ],
+      "responses": [
+        "I'm sorry you're feeling stressed. Would you like to talk about what is causing the stress?",
+        "It sounds like you're dealing with a lot right now. I'm here to listen.",
+        "Thank you for sharing that. Would you like to tell me more about what's making you feel stressed?"
+      ]
+    },
+
+    {
+      "tag": "sadness",
+      "patterns": [
+        "I am sad",
+        "I feel sad",
+        "I am feeling down",
+        "I feel unhappy",
+        "I feel low",
+        "I have been crying",
+        "I don't feel happy",
+        "I am having a difficult day"
+      ],
+      "responses": [
+        "I'm sorry you're feeling this way. You can talk to me about what's bothering you.",
+        "Thank you for sharing how you feel. Would you like to tell me more about what's happening?",
+        "I'm here to listen. What has been making you feel this way?"
+      ]
+    },
+
+    {
+      "tag": "loneliness",
+      "patterns": [
+        "I feel lonely",
+        "I am lonely",
+        "I feel alone",
+        "I feel isolated",
+        "Nobody understands me",
+        "I have no one to talk to",
+        "I don't have anyone",
+        "I feel disconnected from everyone"
+      ],
+      "responses": [
+        "Feeling lonely can be difficult. I'm here to listen.",
+        "Thank you for reaching out. Would you like to tell me more about what you're experiencing?",
+        "You deserve support and connection. Consider reaching out to someone you trust as well."
+      ]
+    },
+
+    {
+      "tag": "anxiety",
+      "patterns": [
+        "I feel anxious",
+        "I am anxious",
+        "I am worried",
+        "I keep worrying",
+        "I feel nervous",
+        "I cannot stop worrying",
+        "I am having anxiety",
+        "Everything makes me anxious"
+      ],
+      "responses": [
+        "I'm sorry you're feeling anxious. Would you like to tell me what's worrying you?",
+        "It sounds like you're experiencing a lot of worry right now. Taking a few slow breaths may help you pause.",
+        "Thank you for telling me. I'm here to listen."
+      ]
+    },
+
+    {
+      "tag": "sleep",
+      "patterns": [
+        "I cannot sleep",
+        "I can't sleep",
+        "I haven't been able to sleep",
+        "I haven't been sleeping properly",
+        "I keep waking up at night",
+        "I am awake all night",
+        "I have trouble sleeping",
+        "I am having difficulty sleeping",
+        "My sleep has been terrible",
+        "I don't sleep well"
+      ],
+      "responses": [
+        "Poor sleep can make difficult feelings feel even harder. Would you like to talk about what's keeping you awake?",
+        "Would you like to tell me what's making it difficult to sleep?",
+        "If sleep problems continue, consider discussing them with a healthcare professional."
+      ]
+    },
+
+    {
+      "tag": "anger",
+      "patterns": [
+        "I am angry",
+        "I feel angry",
+        "I am very mad",
+        "I feel irritated",
+        "I am furious",
+        "I have a lot of anger",
+        "Everything is making me angry"
+      ],
+      "responses": [
+        "It sounds like you're feeling angry. Would you like to talk about what happened?",
+        "It's okay to talk about difficult emotions. What made you feel this way?",
+        "Taking a short pause before reacting can sometimes help. I'm here to listen."
+      ]
+    },
+
+    {
+      "tag": "fear",
+      "patterns": [
+        "I am afraid",
+        "I feel scared",
+        "I am frightened",
+        "I feel fear",
+        "I am terrified",
+        "Something is making me scared",
+        "I feel unsafe"
+      ],
+      "responses": [
+        "I'm sorry you're feeling afraid. Would you like to tell me what is worrying you?",
+        "That sounds difficult. I'm here to listen.",
+        "You can take things one step at a time. Tell me more about what you're experiencing."
+      ]
+    },
+
+    {
+      "tag": "motivation",
+      "patterns": [
+        "I feel unmotivated",
+        "I have no motivation",
+        "I don't feel motivated",
+        "I feel lazy",
+        "I am too tired to do anything",
+        "I can't focus",
+        "I want to give up",
+        "I don't feel like doing anything"
+      ],
+      "responses": [
+        "It's normal to have days when motivation feels low. Try focusing on one small task at a time.",
+        "You don't have to solve everything at once. What's one small thing you could do right now?",
+        "Be kind to yourself. Small steps can still be meaningful progress."
+      ]
+    },
+
+    {
+      "tag": "study_pressure",
+      "patterns": [
+        "I am under exam pressure",
+        "My exams are making me worried",
+        "I am stressed about my exams",
+        "I have too much study pressure",
+        "I am worried about my marks",
+        "I am worried about my studies",
+        "College is stressing me out",
+        "I am struggling with my studies",
+        "I am scared about my exams",
+        "I have academic pressure"
+      ],
+      "responses": [
+        "Academic pressure can feel overwhelming. Would you like to tell me what is making your studies difficult right now?",
+        "It sounds like your studies are putting a lot of pressure on you. Try focusing on one small task at a time.",
+        "You don't have to solve everything at once. What part of your studies is worrying you the most?"
+      ]
+    },
+
+    {
+      "tag": "work_pressure",
+      "patterns": [
+        "I am under work pressure",
+        "My job is stressing me",
+        "I have too much workload",
+        "Work is making me stressed",
+        "I am stressed at work",
+        "I have office pressure",
+        "I am struggling with my job",
+        "My work is overwhelming me"
+      ],
+      "responses": [
+        "Work pressure can be difficult to manage. Would you like to tell me what's causing the pressure?",
+        "It sounds like you have a lot on your plate. Breaking your tasks into smaller steps may help.",
+        "I'm here to listen. What has been making work difficult for you?"
+      ]
+    },
+
+    {
+      "tag": "relationship",
+      "patterns": [
+        "I have relationship problems",
+        "I am having problems in my relationship",
+        "My relationship is causing me stress",
+        "I am going through a breakup",
+        "I had a breakup",
+        "I am having problems with my partner",
+        "I am having problems with my boyfriend",
+        "I am having problems with my girlfriend",
+        "I am having friendship problems",
+        "I am having problems with my friends"
+      ],
+      "responses": [
+        "Relationships can bring up difficult emotions. Would you like to tell me what happened?",
+        "It sounds like this relationship is affecting you. I'm here to listen.",
+        "Talking through what happened can sometimes help you understand what you're feeling."
+      ]
+    },
+
+    {
+      "tag": "self_confidence",
+      "patterns": [
+        "I have low confidence",
+        "I don't feel confident",
+        "I lack confidence",
+        "I don't believe in myself",
+        "I don't feel good enough",
+        "I feel insecure",
+        "I have low self esteem",
+        "I feel like I am not good enough",
+        "I doubt myself",
+        "I don't feel confident about myself"
+      ],
+      "responses": [
+        "It's understandable to have moments when your confidence feels low. What is making you feel this way?",
+        "You don't have to be perfect to have value. Would you like to tell me more?",
+        "Be patient and kind with yourself. Small achievements are still achievements."
+      ]
+    },
+
+    {
+      "tag": "thanks",
+      "patterns": [
+        "thank you",
+        "thanks",
+        "that was helpful",
+        "you helped me",
+        "I appreciate your help",
+        "thanks for listening"
+      ],
+      "responses": [
+        "You're welcome. I'm glad you reached out.",
+        "I'm happy I could listen.",
+        "You're welcome. Take care of yourself."
+      ]
+    },
+
+    {
+      "tag": "goodbye",
+      "patterns": [
+        "bye",
+        "goodbye",
+        "see you",
+        "talk to you later",
+        "I have to go",
+        "I will talk later"
+      ],
+      "responses": [
+        "Take care of yourself. Goodbye!",
+        "Take care. You can reach out again whenever you want to talk.",
+        "Goodbye! I hope you have a peaceful day."
+      ]
+    }
+  ]
+}
