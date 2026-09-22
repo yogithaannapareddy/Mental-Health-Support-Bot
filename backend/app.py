@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify, send_from_directory
-import sys
 import os
+import sys
 import json
 from datetime import datetime
 
@@ -10,9 +10,9 @@ from transformers import (
 )
 
 
-# ==================================================
+# ============================================================
 # PROJECT PATHS
-# ==================================================
+# ============================================================
 
 PROJECT_ROOT = os.path.dirname(
     os.path.dirname(os.path.abspath(__file__))
@@ -21,11 +21,6 @@ PROJECT_ROOT = os.path.dirname(
 FRONTEND_FOLDER = os.path.join(
     PROJECT_ROOT,
     "frontend"
-)
-
-MODEL_FOLDER = os.path.join(
-    PROJECT_ROOT,
-    "blenderbot_mental_health_model"
 )
 
 LOG_FOLDER = os.path.join(
@@ -38,21 +33,14 @@ LOG_FILE = os.path.join(
     "chat_sessions.json"
 )
 
-
-# Create logs folder if it does not exist
-os.makedirs(
-    LOG_FOLDER,
-    exist_ok=True
-)
+os.makedirs(LOG_FOLDER, exist_ok=True)
 
 
-# Allow importing input_filter.py
+# ============================================================
+# INPUT FILTER
+# ============================================================
+
 sys.path.append(PROJECT_ROOT)
-
-
-# ==================================================
-# IMPORT INPUT FILTER
-# ==================================================
 
 from input_filter import (
     contains_offensive_language,
@@ -60,37 +48,40 @@ from input_filter import (
 )
 
 
-# ==================================================
-# CREATE FLASK APP
-# ==================================================
+# ============================================================
+# HUGGING FACE MODEL
+# ============================================================
+
+MODEL_NAME = "yogitha0506/mindcare-blenderbot"
+
+print("========================================")
+print("Loading MindCare model...")
+print("Model:", MODEL_NAME)
+print("========================================")
+
+tokenizer = BlenderbotTokenizer.from_pretrained(
+    MODEL_NAME
+)
+
+model = BlenderbotForConditionalGeneration.from_pretrained(
+    MODEL_NAME
+)
+
+model.eval()
+
+print("MindCare model loaded successfully!")
+
+
+# ============================================================
+# FLASK APPLICATION
+# ============================================================
 
 app = Flask(__name__)
 
 
-# ==================================================
-# LOAD FINE-TUNED BLENDERBOT
-# ==================================================
-
-print("Loading fine-tuned BlenderBot tokenizer...")
-
-tokenizer = BlenderbotTokenizer.from_pretrained(
-    MODEL_FOLDER
-)
-
-
-print("Loading fine-tuned BlenderBot model...")
-
-model = BlenderbotForConditionalGeneration.from_pretrained(
-    MODEL_FOLDER
-)
-
-
-print("Fine-tuned BlenderBot loaded successfully!")
-
-
-# ==================================================
-# SAFETY PHRASES
-# ==================================================
+# ============================================================
+# SAFETY
+# ============================================================
 
 SAFETY_PHRASES = [
     "hurt myself",
@@ -104,11 +95,7 @@ SAFETY_PHRASES = [
 ]
 
 
-# ==================================================
-# SAFETY MESSAGE CHECK
-# ==================================================
-
-def is_safety_message(message):
+def contains_safety_phrase(message):
 
     message = message.lower()
 
@@ -120,24 +107,22 @@ def is_safety_message(message):
     return False
 
 
-# ==================================================
-# SAFETY RESPONSE
-# ==================================================
-
 def get_safety_response():
 
     return (
         "I'm really sorry that you're going through this. "
-        "If you feel that you may hurt yourself or are in immediate danger, "
-        "please contact your local emergency service or go to the nearest "
-        "emergency department. Please also reach out to someone you trust "
-        "and consider contacting a qualified mental-health professional."
+        "You don't have to face this alone. "
+        "If you are in immediate danger, please contact your "
+        "local emergency services or go to the nearest emergency "
+        "department. You can also reach out to someone you trust "
+        "and stay with them. A qualified mental-health professional "
+        "can provide appropriate support."
     )
 
 
-# ==================================================
-# SAVE CHAT SESSION
-# ==================================================
+# ============================================================
+# SESSION LOGGING
+# ============================================================
 
 def save_chat_session(user_message, response):
 
@@ -147,13 +132,9 @@ def save_chat_session(user_message, response):
         "bot_response": response
     }
 
-    # ----------------------------------------------
-    # Read existing sessions
-    # ----------------------------------------------
+    try:
 
-    if os.path.exists(LOG_FILE):
-
-        try:
+        if os.path.exists(LOG_FILE):
 
             with open(
                 LOG_FILE,
@@ -163,28 +144,17 @@ def save_chat_session(user_message, response):
 
                 sessions = json.load(file)
 
-        except (
-            json.JSONDecodeError,
-            FileNotFoundError
-        ):
+        else:
 
             sessions = []
 
-    else:
+    except Exception:
 
         sessions = []
 
 
-    # ----------------------------------------------
-    # Add new session
-    # ----------------------------------------------
-
     sessions.append(session)
 
-
-    # ----------------------------------------------
-    # Save sessions
-    # ----------------------------------------------
 
     with open(
         LOG_FILE,
@@ -200,11 +170,11 @@ def save_chat_session(user_message, response):
         )
 
 
-# ==================================================
-# HOME PAGE
-# ==================================================
+# ============================================================
+# FRONTEND
+# ============================================================
 
-@app.route("/", methods=["GET"])
+@app.route("/")
 def home():
 
     return send_from_directory(
@@ -213,137 +183,173 @@ def home():
     )
 
 
-# ==================================================
+@app.route("/style.css")
+def style():
+
+    return send_from_directory(
+        FRONTEND_FOLDER,
+        "style.css"
+    )
+
+
+# ============================================================
 # CHAT API
-# ==================================================
+# ============================================================
 
 @app.route("/chat", methods=["POST"])
 def chat():
 
-    data = request.get_json()
+    print("Received /chat request")
+
+    try:
+
+        data = request.get_json(silent=True)
+
+        print("Received data:", data)
+
+        if not data:
+
+            return jsonify({
+                "response": "Please enter a message."
+            }), 400
 
 
-    # ----------------------------------------------
-    # Validate request
-    # ----------------------------------------------
-
-    if not data or "message" not in data:
-
-        return jsonify({
-            "error": "Please provide a message."
-        }), 400
+        user_message = data.get(
+            "message",
+            ""
+        ).strip()
 
 
-    user_message = data["message"].strip()
+        print("User message:", user_message)
 
 
-    if not user_message:
+        if not user_message:
 
-        return jsonify({
-            "error": "Message cannot be empty."
-        }), 400
+            return jsonify({
+                "response": "Please enter a message."
+            }), 400
 
 
-    # ==================================================
-    # SAFETY CHECK
-    # ==================================================
+        # ----------------------------------------------------
+        # SAFETY CHECK
+        # ----------------------------------------------------
 
-    if is_safety_message(user_message):
+        if contains_safety_phrase(user_message):
 
-        response = get_safety_response()
+            response = get_safety_response()
+
+            save_chat_session(
+                user_message,
+                response
+            )
+
+            return jsonify({
+                "response": response
+            })
+
+
+        # ----------------------------------------------------
+        # OFFENSIVE LANGUAGE CHECK
+        # ----------------------------------------------------
+
+        if contains_offensive_language(user_message):
+
+            response = get_filter_response()
+
+            save_chat_session(
+                user_message,
+                response
+            )
+
+            return jsonify({
+                "response": response
+            })
+
+
+        # ----------------------------------------------------
+        # TOKENIZATION
+        # ----------------------------------------------------
+
+        inputs = tokenizer(
+            user_message,
+            return_tensors="pt",
+            truncation=True,
+            max_length=128
+        )
+
+
+        # ----------------------------------------------------
+        # MODEL GENERATION
+        # ----------------------------------------------------
+
+        outputs = model.generate(
+            **inputs,
+            max_new_tokens=50,
+            num_beams=4,
+            early_stopping=True
+        )
+
+
+        # ----------------------------------------------------
+        # DECODE
+        # ----------------------------------------------------
+
+        response = tokenizer.decode(
+            outputs[0],
+            skip_special_tokens=True
+        ).strip()
+
+
+        if not response:
+
+            response = (
+                "I'm here to listen. "
+                "Would you like to tell me a little more "
+                "about how you're feeling?"
+            )
+
+
+        print("Bot response:", response)
+
+
+        # ----------------------------------------------------
+        # SAVE SESSION
+        # ----------------------------------------------------
 
         save_chat_session(
             user_message,
             response
         )
 
+
         return jsonify({
-            "user_message": user_message,
             "response": response
         })
 
 
-    # ==================================================
-    # OFFENSIVE LANGUAGE FILTER
-    # ==================================================
+    except Exception as error:
 
-    if contains_offensive_language(user_message):
-
-        response = get_filter_response()
-
-        save_chat_session(
-            user_message,
-            response
-        )
+        print("========================================")
+        print("CHAT ERROR:")
+        print(error)
+        print("========================================")
 
         return jsonify({
-            "user_message": user_message,
-            "response": response
-        })
+            "response": (
+                "I'm sorry, something went wrong. "
+                "Please try again."
+            )
+        }), 500
 
 
-    # ==================================================
-    # GENERATE RESPONSE USING FINE-TUNED BLENDERBOT
-    # ==================================================
-
-    inputs = tokenizer(
-        user_message,
-        return_tensors="pt",
-        max_length=64,
-        truncation=True
-    )
-
-
-    reply_ids = model.generate(
-        **inputs,
-        max_new_tokens=50
-    )
-
-
-    response = tokenizer.decode(
-        reply_ids[0],
-        skip_special_tokens=True
-    ).strip()
-
-
-    # ==================================================
-    # FALLBACK RESPONSE
-    # ==================================================
-
-    if not response:
-
-        response = (
-            "I'm here to listen. "
-            "Would you like to tell me more about how you're feeling?"
-        )
-
-
-    # ==================================================
-    # SAVE NORMAL CHAT
-    # ==================================================
-
-    save_chat_session(
-        user_message,
-        response
-    )
-
-
-    # ==================================================
-    # RETURN RESPONSE
-    # ==================================================
-
-    return jsonify({
-        "user_message": user_message,
-        "response": response
-    })
-
-
-# ==================================================
-# START FLASK SERVER
-# ==================================================
+# ============================================================
+# START APPLICATION
+# ============================================================
 
 if __name__ == "__main__":
 
     app.run(
-        debug=True
+        host="0.0.0.0",
+        port=5000,
+        debug=False
     )

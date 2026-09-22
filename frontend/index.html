@@ -2,44 +2,51 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>MindCare - Mental Health Support</title>
+    <title>MindCare - Mental Health Support Assistant</title>
 
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/style.css">
+
 </head>
+
 
 <body>
 
-    <div class="app-container">
+    <div class="chat-container">
 
         <!-- Header -->
-        <header class="chat-header">
 
-            <div class="bot-icon">
-                🧠
-            </div>
+        <div class="chat-header">
 
             <div>
+
                 <h1>MindCare</h1>
 
-                <p>
-                    Mental Health Support Assistant
-                </p>
+                <p>Mental Health Support Assistant</p>
+
             </div>
 
             <div class="status">
+
                 <span class="status-dot"></span>
+
                 Online
+
             </div>
 
-        </header>
+        </div>
 
 
-        <!-- Chat Area -->
-        <main id="chat-box" class="chat-box">
+        <!-- Chat messages -->
+
+        <div
+            class="chat-box"
+            id="chatBox"
+        >
 
             <div class="message bot-message">
 
@@ -49,35 +56,34 @@
 
                 <div class="message-content">
 
-                    <div class="sender">
-                        MindCare
-                    </div>
+                    <strong>MindCare</strong>
 
-                    <div class="bubble">
+                    <p>
                         Hello! I'm here to listen and support you.
                         How are you feeling today?
-                    </div>
+                    </p>
 
                 </div>
 
             </div>
 
-        </main>
+        </div>
 
 
-        <!-- Input Area -->
+        <!-- Input -->
+
         <div class="input-area">
 
             <input
                 type="text"
-                id="message-input"
-                placeholder="Type how you're feeling..."
+                id="messageInput"
+                placeholder="Type how you are feeling..."
                 autocomplete="off"
             >
 
             <button
-                id="send-button"
-                onclick="sendMessage()"
+                type="button"
+                id="sendButton"
             >
                 Send
             </button>
@@ -86,10 +92,12 @@
 
 
         <!-- Disclaimer -->
+
         <div class="disclaimer">
 
-            This chatbot provides general emotional support and
-            is not a replacement for a qualified mental-health professional.
+            This chatbot provides general emotional support
+            and is not a replacement for a qualified
+            mental-health professional.
 
         </div>
 
@@ -99,26 +107,110 @@
     <script>
 
         const messageInput =
-            document.getElementById("message-input");
+            document.getElementById("messageInput");
+
+        const sendButton =
+            document.getElementById("sendButton");
 
         const chatBox =
-            document.getElementById("chat-box");
+            document.getElementById("chatBox");
 
 
-        // Allow Enter key to send message
-        messageInput.addEventListener(
-            "keydown",
-            function(event) {
+        // ====================================================
+        // ADD MESSAGE
+        // ====================================================
 
-                if (event.key === "Enter") {
+        function addMessage(message, sender) {
 
-                    sendMessage();
+            const messageDiv =
+                document.createElement("div");
 
-                }
+
+            if (sender === "user") {
+
+                messageDiv.className =
+                    "message user-message";
+
+
+                const content =
+                    document.createElement("div");
+
+                content.className =
+                    "message-content";
+
+
+                const name =
+                    document.createElement("strong");
+
+                name.textContent = "You";
+
+
+                const text =
+                    document.createElement("p");
+
+                text.textContent = message;
+
+
+                content.appendChild(name);
+                content.appendChild(text);
+
+                messageDiv.appendChild(content);
 
             }
-        );
 
+            else {
+
+                messageDiv.className =
+                    "message bot-message";
+
+
+                const avatar =
+                    document.createElement("div");
+
+                avatar.className = "avatar";
+
+                avatar.textContent = "🧠";
+
+
+                const content =
+                    document.createElement("div");
+
+                content.className =
+                    "message-content";
+
+
+                const name =
+                    document.createElement("strong");
+
+                name.textContent = "MindCare";
+
+
+                const text =
+                    document.createElement("p");
+
+                text.textContent = message;
+
+
+                content.appendChild(name);
+                content.appendChild(text);
+
+                messageDiv.appendChild(avatar);
+                messageDiv.appendChild(content);
+
+            }
+
+
+            chatBox.appendChild(messageDiv);
+
+            chatBox.scrollTop =
+                chatBox.scrollHeight;
+
+        }
+
+
+        // ====================================================
+        // SEND MESSAGE
+        // ====================================================
 
         async function sendMessage() {
 
@@ -126,7 +218,6 @@
                 messageInput.value.trim();
 
 
-            // Don't send empty messages
             if (message === "") {
 
                 return;
@@ -134,7 +225,8 @@
             }
 
 
-            // Display user message
+            // Show user's message
+
             addMessage(
                 message,
                 "user"
@@ -142,19 +234,29 @@
 
 
             // Clear input
+
             messageInput.value = "";
 
 
-            // Show typing indicator
-            const typingMessage =
-                addTypingIndicator();
+            // Disable button
+
+            sendButton.disabled = true;
+
+            sendButton.textContent =
+                "Sending...";
 
 
             try {
 
+                console.log(
+                    "Sending:",
+                    message
+                );
+
+
                 const response =
                     await fetch(
-                        "http://127.0.0.1:5000/chat",
+                        "/chat",
                         {
                             method: "POST",
 
@@ -170,165 +272,92 @@
                     );
 
 
+                console.log(
+                    "Status:",
+                    response.status
+                );
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        "Server returned " +
+                        response.status
+                    );
+
+                }
+
+
                 const data =
                     await response.json();
 
 
-                // Remove typing indicator
-                typingMessage.remove();
+                console.log(
+                    "Response:",
+                    data
+                );
 
-
-                if (data.response) {
-
-                    addMessage(
-                        data.response,
-                        "bot"
-                    );
-
-                }
-                else if (data.error) {
-
-                    addMessage(
-                        data.error,
-                        "bot"
-                    );
-
-                }
-
-
-            }
-            catch (error) {
-
-                typingMessage.remove();
 
                 addMessage(
-                    "Sorry, I could not connect to the server. Please make sure the Flask API is running.",
+                    data.response,
                     "bot"
                 );
 
-                console.error(error);
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    "Error:",
+                    error
+                );
+
+
+                addMessage(
+                    "Sorry, I could not connect to the server. Please try again.",
+                    "bot"
+                );
+
+            }
+
+
+            finally {
+
+                sendButton.disabled = false;
+
+                sendButton.textContent =
+                    "Send";
+
+                messageInput.focus();
 
             }
 
         }
 
 
-        function addMessage(
-            message,
-            sender
-        ) {
+        // Button click
 
-            const messageDiv =
-                document.createElement("div");
-
-
-            messageDiv.className =
-                "message " +
-                sender +
-                "-message";
+        sendButton.addEventListener(
+            "click",
+            sendMessage
+        );
 
 
-            if (sender === "bot") {
+        // Enter key
 
-                messageDiv.innerHTML = `
-                    <div class="avatar">
-                        🧠
-                    </div>
+        messageInput.addEventListener(
+            "keydown",
+            function(event) {
 
-                    <div class="message-content">
+                if (event.key === "Enter") {
 
-                        <div class="sender">
-                            MindCare
-                        </div>
+                    sendMessage();
 
-                        <div class="bubble">
-                            ${escapeHtml(message)}
-                        </div>
-
-                    </div>
-                `;
+                }
 
             }
-            else {
-
-                messageDiv.innerHTML = `
-                    <div class="message-content">
-
-                        <div class="sender">
-                            You
-                        </div>
-
-                        <div class="bubble">
-                            ${escapeHtml(message)}
-                        </div>
-
-                    </div>
-                `;
-
-            }
-
-
-            chatBox.appendChild(messageDiv);
-
-
-            // Scroll to bottom
-            chatBox.scrollTop =
-                chatBox.scrollHeight;
-
-        }
-
-
-        function addTypingIndicator() {
-
-            const typingDiv =
-                document.createElement("div");
-
-
-            typingDiv.className =
-                "message bot-message";
-
-
-            typingDiv.innerHTML = `
-                <div class="avatar">
-                    🧠
-                </div>
-
-                <div class="message-content">
-
-                    <div class="sender">
-                        MindCare
-                    </div>
-
-                    <div class="bubble typing">
-                        Thinking...
-                    </div>
-
-                </div>
-            `;
-
-
-            chatBox.appendChild(typingDiv);
-
-
-            chatBox.scrollTop =
-                chatBox.scrollHeight;
-
-
-            return typingDiv;
-
-        }
-
-
-        function escapeHtml(text) {
-
-            const div =
-                document.createElement("div");
-
-            div.textContent = text;
-
-            return div.innerHTML;
-
-        }
+        );
 
     </script>
 
